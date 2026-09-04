@@ -1,15 +1,47 @@
 const URL_BASE = "https://rickandmortyapi.com/api/character";
 
 export async function obtenerPagina(pagina) {
+  const respuesta = await fetch(`${URL_BASE}?page=${pagina}`);
+  return respuesta.json();
 }
 
 export async function obtenerInfo() {
+  const primeraPagina = await obtenerPagina(1);
+  return primeraPagina.info;
 }
 
 export async function obtenerTodosSecuencial() {
-  return [];
+  const inicio = Date.now();
+  const info = await obtenerInfo();
+  const totalPaginas = info.pages;
+
+  let personajes = [];
+  for (let i = 1; i <= totalPaginas; i++) {
+    const pagina = await obtenerPagina(i);
+    personajes = personajes.concat(pagina.results);
+  }
+
+  const fin = Date.now();
+  console.log(`Secuencial: ${personajes.length} personajes en ${fin - inicio} ms`);
+
+  return personajes;
 }
 
 export async function obtenerTodosConcurrente() {
-  return [];
+  const inicio = Date.now();
+  const info = await obtenerInfo();
+  const totalPaginas = info.pages;
+
+  const promesas = [];
+  for (let i = 1; i <= totalPaginas; i++) {
+    promesas.push(obtenerPagina(i));
+  }
+
+  const paginas = await Promise.all(promesas);
+  const personajes = paginas.reduce((acumulado, pagina) => acumulado.concat(pagina.results), []);
+
+  const fin = Date.now();
+  console.log(`Concurrente: ${personajes.length} personajes en ${fin - inicio} ms`);
+
+  return personajes;
 }
