@@ -1,0 +1,14 @@
+{
+  "name": "rick-morty-taller1",
+  "version": "1.0.0",
+  "description": "Taller 1 - Promesas, APIs y Manipulacion de Datos con la API de Rick and Morty",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
