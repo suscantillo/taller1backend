@@ -1,9 +1,21 @@
 const URL_BASE = "https://rickandmortyapi.com/api/character";
 
 export async function obtenerPagina(pagina) {
-  const respuesta = await fetch(`${URL_BASE}?page=${pagina}`);
-  return respuesta.json();
+  for (let intento = 1; intento <= 8; intento++) {
+    const respuesta = await fetch(`${URL_BASE}?page=${pagina}`);
+
+    if (respuesta.status === 200) {
+      return respuesta.json();
+    }
+
+    await new Promise(function (resolve) {
+      setTimeout(resolve, 1000 * intento);
+    });
+  }
+
+  throw new Error(`No se pudo obtener la pagina ${pagina} despues de varios intentos`);
 }
+
 
 export async function obtenerInfo() {
   const primeraPagina = await obtenerPagina(1);
