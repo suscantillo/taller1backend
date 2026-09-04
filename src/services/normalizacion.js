@@ -1,16 +1,16 @@
 export function normalizarPersonajes(personajes) {
   return personajes.map((personaje) => {
     return {
-      id: p.id,
-      nombre: p.name,
-      estado: p.status,
-      especie: p.species,
-      tipo: p.type,
-      genero: p.gender,
-      origen: p.origin.name,
-      ubicacionActual: p.location.name,
-      cantidadEpisodios: p.episode.length,
-      imagen: p.image,
+      id: personaje.id,
+      nombre: personaje.name,
+      estado: personaje.status,
+      especie: personaje.species,
+      tipo: personaje.type,
+      genero: personaje.gender,
+      origen: personaje.origin.name,
+      ubicacionActual: personaje.location.name,
+      cantidadEpisodios: personaje.episode.length,
+      imagen: personaje.image,
     };
   });
 }
